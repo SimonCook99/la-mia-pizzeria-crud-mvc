@@ -24,6 +24,10 @@ namespace la_mia_pizzeria_static.Models
         [Range(1,99)]
         public double Prezzo { get; set; }
 
+
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
+
         public Pizza(string nome, string descrizione, string immagine, double prezzo){
             Nome = nome;
             Descrizione = descrizione;

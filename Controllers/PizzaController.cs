@@ -25,7 +25,16 @@ namespace la_mia_pizzeria_static.Controllers
 
         [HttpGet]
         public IActionResult Create(){
-            return View("Create");
+
+            using(PizzaContext context = new PizzaContext()){
+                List<Category> categories= context.Categories.ToList();
+
+                PizzaCategories model = new PizzaCategories();
+                model.Categories = categories;
+                model.Pizza = new Pizza();
+
+                return View("Create", model);
+            }
         }
 
 
@@ -54,7 +63,7 @@ namespace la_mia_pizzeria_static.Controllers
                     return NotFound();
                 }
 
-                return View("Update", pizza);
+                return View("Update", new PizzaCategories());
             }
         }
 

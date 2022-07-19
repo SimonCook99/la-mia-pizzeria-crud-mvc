@@ -21,6 +21,7 @@
                 <th scope="col">Immagine</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Descrizione</th>
+                <th scope="col">Categoria</th>
                 <th scope="col">Prezzo</th>
                 <th scope="col">Dettagli</th>
             </tr>
@@ -32,12 +33,21 @@
                     <td><img src="@pizza.Immagine"></td>
                     <td><h1>@pizza.Nome</h1></td>
                     <td><p>@pizza.Descrizione</p></td>
+                    <td>
+                        @if(@pizza.Category != null){
+                            <p>@pizza.Category.Nome</p>
+                        }
+                        else{
+                           <p>Categoria assente</p>     
+                        }
+                    </td>
                     <td><h2>@pizza.Prezzo €</h2></td>
                     <td>
                         <a href="@Url.Action("Show", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Mostra dettagli</a>
                         <a href="@Url.Action("Update", "Pizza", new {Id = pizza.Id})" class="btn btn-secondary">Modifica Pizza</a>
                         
                         <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                            @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-danger">Elimina Pizza</button>
                         </form>
                     </td>

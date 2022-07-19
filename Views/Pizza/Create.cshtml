@@ -1,7 +1,7 @@
 ﻿@using la_mia_pizzeria_static.Models
 
 @{
-    @model Pizza
+    @model PizzaCategories
     
 
     Layout = "_MenuLayout";
@@ -12,24 +12,34 @@
         @Html.AntiForgeryToken()
         <div class="form-group">
             <label>Inserisci il nome della pizza *</label>
-            <input type="text" asp-for="Nome" class="form-control" placeholder="Nome pizza">
-            <span asp-validation-for="Nome" class="text-danger"></span>
+            <input type="text" asp-for="Pizza.Nome" class="form-control" placeholder="Nome pizza">
+            <span asp-validation-for="Pizza.Nome" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Inserisci una breve descrizione della nuova pizza</label>
-            <textarea asp-for="Descrizione" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="Descrizione" class="text-danger"></span>
+            <textarea asp-for="Pizza.Descrizione" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Pizza.Descrizione" class="text-danger"></span>
         </div>
         <div class="form-check">
             <label class="form-check-label" style="display: block;">Allega un'immagine di anteprima della tua pizza</label>
-            <input type="file" class="form-control-file" asp-for="Immagine">
-            <span asp-validation-for="Immagine" class="text-danger"></span>
+            <input type="file" class="form-control-file" asp-for="Pizza.Immagine">
+            <span asp-validation-for="Pizza.Immagine" class="text-danger"></span>
         </div>
         <div class="form-check">
             <label class="form-check-label">Inserisci il prezzo della pizza</label>
-            <input type="number" asp-for="Prezzo" step="0.01">
-            <span asp-validation-for="Prezzo" class="text-danger"></span>
+            <input type="number" asp-for="Pizza.Prezzo" step="0.01">
+            <span asp-validation-for="Pizza.Prezzo" class="text-danger"></span>
         </div>
+
+        <label class="form-check-label">Inserisci la categoria della pizza</label>
+        <select>
+            <option value=""></option>
+
+            @foreach(Category item in @Model.Categories){
+                <option value="@item.Id"> @item.Nome </option>
+            }
+        </select>
+
         <button type="submit" class="btn btn-primary">Crea pizza</button>
     </form>
 </div>
