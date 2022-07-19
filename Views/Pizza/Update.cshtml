@@ -1,0 +1,36 @@
+﻿@using la_mia_pizzeria_static.Models
+
+@{
+    @model Pizza
+    
+
+    Layout = "_MenuLayout";
+}
+
+<div class="text-center">
+    <form asp-controller="Pizza" asp-action="Update" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label>Inserisci il nome della pizza *</label>
+            <input type="text" asp-for="Nome" class="form-control" placeholder="Nome pizza">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Inserisci una breve descrizione della pizza</label>
+            <textarea asp-for="Descrizione" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Descrizione" class="text-danger"></span>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" style="display: block;">Allega un'immagine di anteprima della tua pizza</label>
+            <input type="file" class="form-control-file" asp-for="Immagine">
+            <span asp-validation-for="Immagine" class="text-danger"></span>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">Inserisci il prezzo della pizza</label>
+            <input type="number" asp-for="Prezzo" step="0.01">
+            <span asp-validation-for="Prezzo" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Crea pizza</button>
+    </form>
+</div>
+

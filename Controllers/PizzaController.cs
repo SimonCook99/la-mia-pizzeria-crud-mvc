@@ -43,5 +43,48 @@ namespace la_mia_pizzeria_static.Controllers
             }
         }
 
+
+        [HttpGet]
+        public IActionResult Update(int id){
+
+            using (PizzaContext context = new PizzaContext()){
+                Pizza pizza = context.Pizzas.Find(id);
+                
+                if (pizza == null){
+                    return NotFound();
+                }
+
+                return View("Update", pizza);
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //l'id ci serve a trovare la pizza nel db, mentre il model Pizza rappresenta la nuova 
+        //entità con i dati modificati dall'utente
+        public IActionResult Update(int id, Pizza pizza){ 
+            if (!ModelState.IsValid){
+                return View("Update", pizza);
+            }
+
+            using (PizzaContext context = new PizzaContext()){
+                Pizza oldPizza = context.Pizzas.Find(id);
+
+                if(oldPizza == null){
+                    return NotFound();
+                }
+
+                oldPizza.Nome = pizza.Nome;
+                oldPizza.Descrizione = pizza.Descrizione;
+                oldPizza.Immagine = pizza.Immagine;
+                oldPizza.Prezzo = pizza.Prezzo;
+
+                context.Pizzas.Update(oldPizza);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
     }
 }

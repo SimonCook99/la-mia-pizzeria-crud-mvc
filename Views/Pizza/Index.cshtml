@@ -33,7 +33,11 @@
                     <td><h1>@pizza.Nome</h1></td>
                     <td><p>@pizza.Descrizione</p></td>
                     <td><h2>@pizza.Prezzo €</h2></td>
-                    <td><a href="@Url.Action("Show", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Mostra dettagli</a></td>
+                    <td>
+                        <a href="@Url.Action("Show", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Mostra dettagli</a>
+                        <a href="@Url.Action("Update", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Modifica Pizza</a>
+                        <a href="@Url.Action("Delete", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Elimina Pizza</a>
+                    </td>
                 </tr>
             }
           </tbody>
