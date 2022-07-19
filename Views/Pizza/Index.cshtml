@@ -1,0 +1,49 @@
+﻿@using la_mia_pizzeria_static.Models
+
+@{
+    @model List<Pizza>
+    
+
+    Layout = "_MenuLayout";
+}
+
+<div class="text-center">
+
+    @if (Model.Count == 0){
+        <h1>Spiacente, attualmente non sono presenti pizze disponibili</h1>
+    }else{
+
+        <a class="btn btn-primary" asp-controller="Pizza" asp-action="Create">Aggiungi una nuova pizza</a>
+        
+        <table class="table">
+          <thead>
+            <tr>
+                <th scope="col">Immagine</th>
+                <th scope="col">Titolo</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Prezzo</th>
+                <th scope="col">Dettagli</th>
+            </tr>
+          </thead>
+          <tbody>
+                
+                @foreach(Pizza pizza in Model){
+                <tr>
+                    <td><img src="@pizza.Immagine"></td>
+                    <td><h1>@pizza.Nome</h1></td>
+                    <td><p>@pizza.Descrizione</p></td>
+                    <td><h2>@pizza.Prezzo €</h2></td>
+                    <td><a href="@Url.Action("Show", "Pizza", new {Id = pizza.Id})" class="btn btn-primary">Mostra dettagli</a></td>
+                </tr>
+            }
+          </tbody>
+        </table>
+    }
+</div>
+
+
+<style>
+    td{
+        width: 30%;
+    }
+</style>

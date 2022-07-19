@@ -1,0 +1,68 @@
+﻿@{
+    <!--Milestone 1-->
+    var nome = "Simone";
+    var cognome = "Mauro";
+
+    <!--Milestone 2-->
+    List<int> numeri = new List<int>();
+
+    List<int> StampaNumeri(int numeroFinale){
+
+        for(int i = 1; i<=numeroFinale; i++){
+            numeri.Add(i);
+        }
+        return numeri;
+    }
+    StampaNumeri(5);
+
+    <!--Milestone 3-->
+    string citazione = "nel mezzo del cammin di nostra vita";
+    int contatore = 0;
+
+    foreach(char carattere in citazione){
+        if(carattere.Equals('a'))
+            contatore++;
+    }
+
+    <!--Milestone 4-->
+    List<int> numeriRandom = new List<int>();
+    for(int i = 0; i < 20; i++){
+        numeriRandom.Add(new Random().Next(1, 91));
+    }
+}
+
+<div class="text-center">
+    
+    <!--Milestone 1-->
+    <h2>@nome @cognome</h2>
+
+    <!--Milestone 2-->
+    <span>
+        @foreach(int numero in numeri){
+            <span>@numero</span>
+        }
+    </span>
+
+    <!--Milestone 3-->
+    <h3>Nella frase "@citazione" ci sono @contatore volte "a"</h3>
+
+    <!--Milestone 4-->
+    @foreach(int numero in numeriRandom){
+        @if(numero>= 20 && numero <= 70){
+            <span>@numero</span>
+        }
+        //}else{ DEBUG PER MOSTRARE ANCHE GLI ALTRI NUMERI
+        //    <span style="color:red;">@numero</span>
+        //}
+    }
+
+    <!--Milestone 5-->
+    <h2>Oggi è il giorno @DateTime.Now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss")</h2>
+
+
+    <!--Milestone 6-->
+    <h3>7 giorni fa era il @DateTime.Now.Subtract(TimeSpan.FromDays(7))</h3>
+    <h3>Oggi è @DateTime.Now.ToString("dddd")</h3>
+    <h2>Tra un anno esatto (@DateTime.Now.AddYears(1).ToString("dd-MM-yyyy")), sarà @DateTime.Now.AddYears(1).ToString("dddd")</h2>
+
+</div>

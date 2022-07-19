@@ -1,0 +1,23 @@
+﻿@using la_mia_pizzeria_static.Models
+
+@{
+    @model Pizza
+
+    Layout = "_MenuLayout";
+}
+
+
+<a class="btn btn-primary" asp-controller="Pizza" asp-action="Index">Torna al menù</a>
+
+<div class="text-center">
+
+    <div class="card" style="width: 80%;transform: translate(10%);">
+      <img src="@Model.Immagine" class="card-img-top" alt="@Model.Nome">
+      <div class="card-body">
+        <h5 class="card-title">@Model.Nome</h5>
+        <p class="card-text">@Model.Descrizione</p>
+        <h3>@Model.Prezzo €</h3> 
+      </div>
+    </div>
+    
+</div>
