@@ -28,11 +28,13 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Create(){
 
             using(PizzaContext context = new PizzaContext()){
-                List<Category> categories= context.Categories.ToList();
+                List<Category> categories = context.Categories.ToList();
+                List<Ingrediente> ingredients = context.Ingredients.ToList();
 
                 PizzaCategories model = new PizzaCategories();
                 model.Categories = categories;
                 model.Pizza = new Pizza();
+                model.Ingredients = ingredients;
 
                 return View("Create", model);
             }

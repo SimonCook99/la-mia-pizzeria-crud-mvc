@@ -25,8 +25,13 @@ namespace la_mia_pizzeria_static.Models
         public double Prezzo { get; set; }
 
 
+        //Riferimenti alla categoria
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }
+
+
+        //riferimento alla lista degli ingredienti
+        public List<Ingrediente> Ingredients { get; set; }
 
         public Pizza(string nome, string descrizione, string immagine, double prezzo){
             Nome = nome;
