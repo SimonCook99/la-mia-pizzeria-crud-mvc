@@ -27,13 +27,13 @@
         </div>
         <div class="form-check">
             <label class="form-check-label">Inserisci il prezzo della pizza</label>
-            <input type="number" asp-for="Pizza.Prezzo" step="0.01">
+            <input asp-for="Pizza.Prezzo">
             <span asp-validation-for="Pizza.Prezzo" class="text-danger"></span>
         </div>
 
         <label class="form-check-label">Inserisci la categoria della pizza</label>
-        <select>
-            <option value=""></option>
+        <select asp-for="Pizza.CategoryId">
+            <option value="">Nessuna categoria</option>
 
             @foreach(Category item in @Model.Categories){
                 <option value="@item.Id"> @item.Nome </option>

@@ -1,19 +1,20 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers
 {
     public class PizzaController : Controller
     {
         public IActionResult Index(){
-            List<Pizza> pizze = new PizzaContext().Pizzas.ToList();
+            List<Pizza> pizze = new PizzaContext().Pizzas.Include(p => p.Category).ToList();
             ViewData["title"] = "Menù pizze";
             return View(pizze);
         }
 
         public IActionResult Show(int id){
-            Pizza pizzaResult = new PizzaContext().Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+            Pizza pizzaResult = new PizzaContext().Pizzas.Where(pizza => pizza.Id == id).Include(p => p.Category).FirstOrDefault();
             if (pizzaResult == null){
                 return NotFound($"Non esiste nessuna pizza con l'id {id}");
             }
@@ -47,6 +48,7 @@ namespace la_mia_pizzeria_static.Controllers
                     return View("Create", model);
                 }
 
+                model.Categories = context.Categories.Where(find => find.Id == model.Pizza.CategoryId).ToList();
                 context.Pizzas.Add(model.Pizza);
                 context.SaveChanges();
                 return RedirectToAction("Index");
@@ -96,6 +98,8 @@ namespace la_mia_pizzeria_static.Controllers
                 oldPizza.Descrizione = pizza.Descrizione;
                 oldPizza.Immagine = pizza.Immagine;
                 oldPizza.Prezzo = pizza.Prezzo;
+                oldPizza.Category = pizza.Category;
+                oldPizza.CategoryId = pizza.CategoryId;
 
                 context.Pizzas.Update(oldPizza);
                 context.SaveChanges();
