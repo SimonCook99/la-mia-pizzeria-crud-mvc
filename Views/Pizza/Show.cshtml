@@ -23,7 +23,16 @@
         else{
             <p class="card-text">N.D</p>
         }
-        <h3>@Model.Prezzo €</h3> 
+
+            @if(@Model.Ingredients.Count == 0){
+                <p>Ingredienti non specificati</p>
+            }
+            else{
+                @foreach(Ingrediente item in Model.Ingredients){
+                    <p>@item.Nome</p>
+                }
+            }
+            <h3>@Model.Prezzo €</h3> 
       </div>
     </div>
     

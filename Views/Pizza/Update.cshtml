@@ -38,6 +38,15 @@
                 <option value="@item.Id" selected=@(item.Id == Model.Pizza.CategoryId)> @item.Nome </option>
             }
         </select>
+
+        @foreach(Ingrediente ingredient in @Model.Ingredients){
+            <div class="form-check">
+
+                <!--La checked mi da null e non so perchè-->
+                <input asp-for="SelectedIngredients[ingredient.Id]" checked=@(Model.Pizza.Ingredients.Contains(ingredient)) id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
+                <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
+            </div>
+        }
         <button type="submit" class="btn btn-primary">Crea pizza</button>
     </form>
 </div>

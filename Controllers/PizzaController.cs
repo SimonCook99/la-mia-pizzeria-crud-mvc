@@ -8,13 +8,13 @@ namespace la_mia_pizzeria_static.Controllers
     public class PizzaController : Controller
     {
         public IActionResult Index(){
-            List<Pizza> pizze = new PizzaContext().Pizzas.Include(p => p.Category).ToList();
+            List<Pizza> pizze = new PizzaContext().Pizzas.Include(p => p.Category).Include(ing => ing.Ingredients).ToList();
             ViewData["title"] = "Menù pizze";
             return View(pizze);
         }
 
         public IActionResult Show(int id){
-            Pizza pizzaResult = new PizzaContext().Pizzas.Where(pizza => pizza.Id == id).Include(p => p.Category).FirstOrDefault();
+            Pizza pizzaResult = new PizzaContext().Pizzas.Where(pizza => pizza.Id == id).Include(p => p.Category).Include(ing => ing.Ingredients).FirstOrDefault();
             if (pizzaResult == null){
                 return NotFound($"Non esiste nessuna pizza con l'id {id}");
             }
@@ -47,10 +47,16 @@ namespace la_mia_pizzeria_static.Controllers
             using (PizzaContext context = new PizzaContext()){
                 if (!ModelState.IsValid){
                     model.Categories = context.Categories.ToList();
+                    model.Ingredients = context.Ingredients.ToList();
                     return View("Create", model);
                 }
 
                 model.Categories = context.Categories.Where(find => find.Id == model.Pizza.CategoryId).ToList();
+
+                foreach(string ingrediente in model.SelectedIngredients){
+
+                    model.Ingredients = context.Ingredients.Where(name => name.Nome == ingrediente).ToList();
+                }
                 context.Pizzas.Add(model.Pizza);
                 context.SaveChanges();
                 return RedirectToAction("Index");
@@ -66,10 +72,15 @@ namespace la_mia_pizzeria_static.Controllers
             using (PizzaContext context = new PizzaContext()){
                 Pizza pizza = context.Pizzas.Find(id);
                 List<Category> categories = context.Categories.ToList();
+                List<Ingrediente> ingredients = context.Ingredients.ToList();
 
                 PizzaCategories model = new PizzaCategories();
                 model.Categories = categories;
                 model.Pizza = pizza;
+                model.Ingredients = ingredients;
+
+                //Da vedere perchè non mi passa gli ingredienti della pizza
+                model.Pizza.Ingredients = pizza.Ingredients;
 
                 if (pizza == null){
                     return NotFound();

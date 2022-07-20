@@ -6,5 +6,7 @@
         public List<Category>? Categories { get; set; }
 
         public List<Ingrediente>? Ingredients { get; set; }
+
+        public List<string>? SelectedIngredients { get; set; }
     }
 }

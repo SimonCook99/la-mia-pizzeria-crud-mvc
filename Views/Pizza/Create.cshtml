@@ -43,7 +43,7 @@
         @foreach(Ingrediente ingredient in @Model.Ingredients){
             <div class="form-check">
 
-                <input id="@ingredient.Id" type="checkbox" value="@ingredient.Nome">
+                <input asp-for="SelectedIngredients[ingredient.Id]" id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
                 <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
             </div>
         }
