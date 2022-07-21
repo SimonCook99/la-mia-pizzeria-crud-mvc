@@ -34,7 +34,13 @@ namespace la_mia_pizzeria_static.Controllers
                 PizzaCategories model = new PizzaCategories();
                 model.Categories = categories;
                 model.Pizza = new Pizza();
-                model.Ingredients = ingredients;
+
+                model.Ingredients = ingredients.Select(vm => new CheckboxItem()
+                    {
+                        Id = vm.Id,
+                        Nome = vm.Nome,
+                        IsChecked = false
+                    }).ToList();
 
                 return View("Create", model);
             }

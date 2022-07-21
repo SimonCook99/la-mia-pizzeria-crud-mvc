@@ -41,22 +41,25 @@
         </select>
 
 
-        <select asp-for="SelectedIngredients"
+        @*<select asp-for="SelectedIngredients"
                 multiple="multiple" size="10"
                 class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
                 asp-items="@Model.Ingredients">
-        </select>
+        </select>*@
 
 
         <!--Prova con le checkbox, ancora in corso-->
-        @*@foreach(Ingrediente ingredient in @Model.Ingredients){
+        @foreach(CheckboxItem ingredient in @Model.Ingredients){
             <div class="form-check">
 
-                @Html.CheckBoxFor(it => ingredient.IsClicked)
-                <input asp-for="SelectedIngredients[ingredient.Id - 1]" id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
+                @*@Html.CheckBoxFor(it => ingredient.IsClicked)*@
+                @*asp-for="SelectedIngredients[ingredient.Id - 1]"*@
+
+                @Html.CheckBoxFor(it => ingredient.IsChecked)
+                @*<input id="@ingredient.Id" type="checkbox" value="@ingredient.Id">*@
                 <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
             </div>
-        }*@
+        }
 
         <button type="submit" class="btn btn-primary">Crea pizza</button>
     </form>
