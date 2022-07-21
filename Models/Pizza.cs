@@ -31,7 +31,7 @@ namespace la_mia_pizzeria_static.Models
 
 
         //riferimento alla lista degli ingredienti
-        public List<Ingrediente> Ingredients { get; set; }
+        public List<Ingrediente>? Ingredients { get; set; }
 
         public Pizza(string nome, string descrizione, string immagine, double prezzo){
             Nome = nome;

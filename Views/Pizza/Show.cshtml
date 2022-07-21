@@ -28,9 +28,11 @@
                 <p>Ingredienti non specificati</p>
             }
             else{
-                @foreach(Ingrediente item in Model.Ingredients){
-                    <p>@item.Nome</p>
-                }
+                <ul>
+                    @foreach(Ingrediente item in Model.Ingredients){
+                        <li>@item.Nome</li>
+                    }
+                </ul>
             }
             <h3>@Model.Prezzo €</h3> 
       </div>

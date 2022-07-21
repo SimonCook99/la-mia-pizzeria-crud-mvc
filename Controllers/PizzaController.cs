@@ -53,11 +53,17 @@ namespace la_mia_pizzeria_static.Controllers
 
                 model.Categories = context.Categories.Where(find => find.Id == model.Pizza.CategoryId).ToList();
 
+
                 foreach(string ingrediente in model.SelectedIngredients){
 
                     model.Ingredients = context.Ingredients.Where(name => name.Nome == ingrediente).ToList();
                 }
                 context.Pizzas.Add(model.Pizza);
+
+                foreach(Ingrediente item in model.Ingredients){
+
+                    context.Ingredients.Add(item);
+                }
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +76,7 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Update(int id){
 
             using (PizzaContext context = new PizzaContext()){
-                Pizza pizza = context.Pizzas.Find(id);
+                Pizza pizza = context.Pizzas.Include(p => p.Ingredients).Where(p => p.Id == id).FirstOrDefault();
                 List<Category> categories = context.Categories.ToList();
                 List<Ingrediente> ingredients = context.Ingredients.ToList();
 
@@ -95,24 +101,28 @@ namespace la_mia_pizzeria_static.Controllers
         [ValidateAntiForgeryToken]
         //l'id ci serve a trovare la pizza nel db, mentre il model Pizza rappresenta la nuova 
         //entità con i dati modificati dall'utente
-        public IActionResult Update(int id, Pizza pizza){ 
-            if (!ModelState.IsValid){
-                return View("Update", pizza);
-            }
+        public IActionResult Update(int id, PizzaCategories data){
 
             using (PizzaContext context = new PizzaContext()){
+
+                if (!ModelState.IsValid){
+                    data.Categories = context.Categories.ToList();
+                    data.Ingredients = context.Ingredients.ToList();
+                    return View("Update", data);
+                }
+
                 Pizza oldPizza = context.Pizzas.Find(id);
 
                 if(oldPizza == null){
                     return NotFound();
                 }
 
-                oldPizza.Nome = pizza.Nome;
-                oldPizza.Descrizione = pizza.Descrizione;
-                oldPizza.Immagine = pizza.Immagine;
-                oldPizza.Prezzo = pizza.Prezzo;
-                oldPizza.Category = pizza.Category;
-                oldPizza.CategoryId = pizza.CategoryId;
+                oldPizza.Nome = data.Pizza.Nome;
+                oldPizza.Descrizione = data.Pizza.Descrizione;
+                oldPizza.Immagine = data.Pizza.Immagine;
+                oldPizza.Prezzo = data.Pizza.Prezzo;
+                oldPizza.Category = data.Pizza.Category;
+                oldPizza.CategoryId = data.Pizza.CategoryId;
 
                 context.Pizzas.Update(oldPizza);
                 context.SaveChanges();

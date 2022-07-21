@@ -12,6 +12,8 @@ namespace la_mia_pizzeria_static.Models{
         [Required]
         public string Nome { get; set; }
 
+        //public bool IsClicked { get; set; }
+
         public List<Pizza> Pizzas { get; set; }
 
         public Ingrediente(){

@@ -43,7 +43,9 @@
             <div class="form-check">
 
                 <!--La checked mi da null e non so perchè-->
-                <input asp-for="SelectedIngredients[ingredient.Id]" checked=@(Model.Pizza.Ingredients.Contains(ingredient)) id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
+                <!--asp-for="SelectedIngredients[ingredient.Id]"-->
+                @*checked=@(Model.Pizza.Ingredients.Contains(ingredient))*@
+                <input checked=@(Model.Pizza.Ingredients.Contains(ingredient)) id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
                 <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
             </div>
         }
