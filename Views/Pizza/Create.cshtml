@@ -55,8 +55,13 @@
                 @*@Html.CheckBoxFor(it => ingredient.IsClicked)*@
                 @*asp-for="SelectedIngredients[ingredient.Id - 1]"*@
 
-                @Html.CheckBoxFor(it => ingredient.IsChecked)
-                @*<input id="@ingredient.Id" type="checkbox" value="@ingredient.Id">*@
+
+                @*@Html.HiddenFor(id=> ingredient.Id) SOLUZIONE VIDEO
+                @Html.DisplayFor(name=> ingredient.Nome)
+
+                @Html.CheckBoxFor(it => ingredient.IsChecked)*@
+
+                <input asp-for="@ingredient.IsChecked" id="@ingredient.Id" type="checkbox" value="@ingredient.Id"> SOLUZIONE MIA
                 <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
             </div>
         }

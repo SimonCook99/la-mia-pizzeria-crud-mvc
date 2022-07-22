@@ -39,19 +39,19 @@
             }
         </select>
 
-
         @*<select asp-for="SelectedIngredients"
                 multiple="multiple" size="10"
                 class="form-control mb-2 mr-sm-2 ml-sm-3 leftList"
                 asp-items="@Model.Ingredients">
         </select>*@
 
-        @foreach(Ingrediente ingredient in @Model.Ingredients){
+        @foreach(CheckboxItem ingredient in @Model.Ingredients){
             <div class="form-check">
 
                 <!--La checked mi da null e non so perchè-->
                 <!--asp-for="SelectedIngredients[ingredient.Id]"-->
-                <input checked=@(Model.Pizza.Ingredients.Contains(ingredient)) id="@ingredient.Id" type="checkbox" value="@ingredient.Id">
+                @Html.CheckBoxFor(it => ingredient.IsChecked)
+                @*<input checked=@(Model.Pizza.Ingredients.Contains(ingredient)) id="@ingredient.Id" type="checkbox" value="@ingredient.Id">*@
                 <label for="@ingredient.Id" class="form-check-label">@ingredient.Nome</label>
             </div>
         }

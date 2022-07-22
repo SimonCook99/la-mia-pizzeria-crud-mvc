@@ -53,23 +53,37 @@ namespace la_mia_pizzeria_static.Controllers
             using (PizzaContext context = new PizzaContext()){
                 if (!ModelState.IsValid){
                     model.Categories = context.Categories.ToList();
-                    model.Ingredients = context.Ingredients.ToList();
+
+                    model.Ingredients = context.Ingredients.ToList().Select(vm => new CheckboxItem()
+                    {
+                        Id = vm.Id,
+                        Nome = vm.Nome,
+                        IsChecked = false
+                    }).ToList();
+
                     return View("Create", model);
                 }
 
                 model.Categories = context.Categories.Where(find => find.Id == model.Pizza.CategoryId).ToList();
+                //model.Ingredients = context.Ingredients.I
 
+                //foreach(string ingrediente in model.SelectedIngredients){
 
-                foreach(string ingrediente in model.SelectedIngredients){
-
-                    model.Ingredients = context.Ingredients.Where(name => name.Nome == ingrediente).ToList();
-                }
+                //model.Ingredients = context.Ingredients.ToList();
+                //}
                 context.Pizzas.Add(model.Pizza);
 
-                foreach(Ingrediente item in model.Ingredients){
+                List<CheckboxItem> listIngredients = new List<CheckboxItem>();
 
-                    context.Ingredients.Add(item);
+                //da sistemare questo passaggio
+                foreach(CheckboxItem item in context.Ingredients.ToList()){
+
+                    if(item.IsChecked == true){
+                        listIngredients.Add(item);
+                    }
                 }
+
+                model.Ingredients = listIngredients;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -89,7 +103,7 @@ namespace la_mia_pizzeria_static.Controllers
                 PizzaCategories model = new PizzaCategories();
                 model.Categories = categories;
                 model.Pizza = pizza;
-                model.Ingredients = ingredients;
+                //model.Ingredients = ingredients;
 
                 //Da vedere perchè non mi passa gli ingredienti della pizza
                 model.Pizza.Ingredients = pizza.Ingredients;
@@ -113,7 +127,14 @@ namespace la_mia_pizzeria_static.Controllers
 
                 if (!ModelState.IsValid){
                     data.Categories = context.Categories.ToList();
-                    data.Ingredients = context.Ingredients.ToList();
+
+                    data.Ingredients = context.Ingredients.ToList().Select(vm => new CheckboxItem()
+                    {
+                        Id = vm.Id,
+                        Nome = vm.Nome,
+                        IsChecked = false
+                    }).ToList();
+
                     return View("Update", data);
                 }
 
